@@ -1,0 +1,9 @@
+---
+
+- name: Install required tooling
+  yum:
+    name: "{{ testing_tools }}"
+    state: present
+
+
+

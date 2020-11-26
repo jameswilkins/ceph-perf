@@ -1,0 +1,8 @@
+---
+- name: Register with activationkey and consume subscriptions matching Red Hat Enterprise Server or Red Hat Virtualization
+  redhat_subscription:
+    state: present
+    activationkey: ppb
+    org_id: 12592501
+    pool: '^Employee SKU$'
+

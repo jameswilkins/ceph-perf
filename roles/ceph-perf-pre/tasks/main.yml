@@ -1,0 +1,19 @@
+---
+# tasks file for ceph-perf-pre
+
+- name: Check OS
+  assert:
+    msg: "{{ ansible_distribution }} is not supported.  CentOS is required"
+    that: "ansible_distribution == 'CentOS'"
+
+
+- name: Repos
+  include_tasks: repos.yml
+
+- name: Updates
+  include_tasks: update_and_reboot.yml
+
+- name: Tools
+  include_tasks: tools.yml
+
+

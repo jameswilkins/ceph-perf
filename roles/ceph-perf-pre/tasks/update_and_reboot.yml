@@ -1,0 +1,21 @@
+---
+
+- name: Install updates
+  yum: 
+    name: "*"
+    state: latest
+    exclude: 
+      - puppet
+
+- name: Check if a reboot is required
+  shell: needs-restarting -r
+  failed_when: false
+  changed_when: false
+  register: reboot_required
+
+- name: Reboot if required
+  reboot:
+    reboot_timeout: 300
+  when: reboot_required == 1
+
+

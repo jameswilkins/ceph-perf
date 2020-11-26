@@ -1,0 +1,8 @@
+---
+# defaults file for ceph-perf-pre
+epel_repo_file: "/etc/yum.repos.d/epel.repo"
+epel_repo_url: "https://dl.fedoraproject.org/pub/epel/$releasever/Everything/$basearch/"
+epel_gpg_file: "/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
+epel_gpg_url: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
+epel_gpg_check: "yes"
+

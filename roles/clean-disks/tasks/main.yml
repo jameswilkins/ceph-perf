@@ -1,0 +1,50 @@
+---
+# tasks file for clean-disks
+
+- name: setup
+  set_fact:
+    host_disk: []
+
+- name: Get a list of block devices (excludes loop and child devices)
+  command: lsblk -n --output NAME --nodeps --exclude 7
+  register: lsblk_out
+
+- name: check if disk {{ item }} is free
+  command: pvcreate --test /dev/{{ item }}
+  ignore_errors: true
+  register: pv_status
+  with_items: "{{lsblk_out.stdout_lines}}"
+
+- name: Update hosts freedisk list
+  set_fact:
+    host_disk: "{{host_disk + [item.item]}}"
+  ignore_errors: true
+  when: item.rc == 0
+  with_items: "{{ pv_status.results}}"
+
+- name: RESULTS
+  debug:
+    var: host_disk
+
+
+- name: Clean Disks
+  command: "dd if=/dev/zero of=/dev/{{ item }} bs=1M count=20000"
+  async: 360
+  poll: 0
+  loop: "{{ host_disk }}"
+  register: dd_async
+
+- name:
+  debug: 
+    var: async_results
+
+
+- name: Check on DD status
+  async_status:
+    jid: "{{ item.ansible_job_id }}"
+  register: dd_async_job_result
+  until: dd_async_job_result.finished
+  retries: 100
+  delay: 30
+  with_items: "{{ dd_async.results }}"
+

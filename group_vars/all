@@ -1,0 +1,11 @@
+repos:
+  - CentOS-Base.repo
+  - CentOS-Extras.repo
+  - CentOS-AppStream.repo
+
+testing_tools:
+  - stress-ng
+  - fio
+  - iperf3
+
+
