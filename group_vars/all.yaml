@@ -1,0 +1,37 @@
+repos:
+  - CentOS-Base.repo
+  - CentOS-Extras.repo
+  - CentOS-AppStream.repo
+
+testing_tools:
+  - stress-ng
+  - fio
+  - iperf3
+
+## DD Job Configuration
+#
+# Timeout for dd jobs.  Increase for production run
+dd_jobs_timeout: 60
+
+# Number of times to loop dd to pre-condition disks
+#
+dd_loop_count: 5
+
+# For testing modify this to enable the DD to finish quicker
+#
+# For Testing
+#
+dd_syntax: bs=1M count=5000 oflag=direct
+#
+# For Production
+#
+# dd_syntax: bs=1M oflag=direct
+#
+
+
+## Stress-ng Job Configuration
+#
+# Passing 0 to --io and --vm let's stress-ng decide the number of threads based on physical cpu 
+stress_ng_opts: --cpu-method all --io 0 --vm 0 --timeout 30m --metrics-brief --log-file=/root/stress-ng.log
+
+

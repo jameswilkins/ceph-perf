@@ -1,0 +1,21 @@
+---
+- name: Clean Disks
+  command: "dd if=/dev/zero of=/dev/{{ loop_host_disk }} {{ dd_syntax }}"
+  async: "{{ dd_jobs_timeout }}"
+  poll: 0
+  loop: "{{ host_disk }}"
+  loop_control:
+    loop_var: loop_host_disk
+  register: dd_async
+
+- name: Check on DD status - Warning - can take a long time
+  async_status:
+    jid: "{{ item.ansible_job_id }}"
+  register: dd_async_job_result
+  until: dd_async_job_result.finished
+  retries: 100
+  delay: 30
+  loop: "{{ dd_async.results }}"
+  #loop_control:
+  #  loop_var: dd_async_loop
+
