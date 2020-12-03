@@ -8,6 +8,10 @@ be1c63ed862026a9b0aff25c36a701131bbc7f442f11c013f6409171ddff3f2323f4ef2f82063b7b
 
 These images were imported into OSP16.1 with the name centos8 appended to differentiate from existing RHEL overcloud images.
 
+wget http://images.rdoproject.org/centos8/train/rdo_trunk/current-tripleo/overcloud-full.tar
+wget http://images.rdoproject.org/centos8/train/rdo_trunk/current-tripleo/ironic-python-agent.tar
+
+
 Machines were deployed using this config file
 
 # cat storage-baremetal-deploy.yaml 

@@ -1,7 +1,6 @@
 [ceph]
-overcloud-ceph-01 ansible_host=192.168.200.30
-overcloud-ceph-02 ansible_host=192.168.200.47
-overcloud-ceph-03 ansible_host=192.168.200.56
+overcloud-ceph-01 ansible_host=192.168.200.60
+overcloud-ceph-02 ansible_host=192.168.200.34
 
 
 [ceph:vars]

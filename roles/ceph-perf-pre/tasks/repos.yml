@@ -1,24 +1,19 @@
 ---
-tasks:
-  - block:
-    tags: updates
+- name: Check for CentOS default repos (missing on C8 OS image)
+  copy:
+    src: '{{ item }}'
+    dest: /etc/yum.repos.d/
+    owner: root
+    group: root
+    mode: 0755
+  loop: '{{ repos }}'
 
-    - name: Check for CentOS default repos (missing on C8 OS image)
-    copy:
-      src: '{{ item }}'
-      dest: /etc/yum.repos.d/
-      owner: root
-      group: root
-      mode: 0755
-    loop: '{{ repos }}'
-
-
-    - name: Enable EPEL8 Repo 
-    yum_repository:
-      name: epel
-      state: present
-      description: EPEL YUM repo
-      baseurl: "{{ epel_repo_url }}"
-      gpgkey: "{{ epel_gpg_url }}"
-      gpgcheck: "{{ epel_gpg_check }}"
+- name: Enable EPEL8 Repo 
+  yum_repository:
+    name: epel
+    state: present
+    description: EPEL YUM repo
+    baseurl: "{{ epel_repo_url }}"
+    gpgkey: "{{ epel_gpg_url }}"
+    gpgcheck: "{{ epel_gpg_check }}"
 

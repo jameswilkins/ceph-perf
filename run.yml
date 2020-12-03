@@ -2,7 +2,7 @@
 - hosts: ceph
   become: yes
   roles:
-    #- ceph-perf-pre
+    - ceph-perf-pre
     - clean-disks
     - stress-ng
     - fio-run
