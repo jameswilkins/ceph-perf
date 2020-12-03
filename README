@@ -8,7 +8,7 @@ be1c63ed862026a9b0aff25c36a701131bbc7f442f11c013f6409171ddff3f2323f4ef2f82063b7b
 
 These images were imported into OSP16.1 with the name centos8 appended to differentiate from existing RHEL overcloud images.
 
-Machines were deployed using
+Machines were deployed using this config file
 
 # cat storage-baremetal-deploy.yaml 
 - name: CephStorage
@@ -23,6 +23,11 @@ Machines were deployed using
     name: storage-02
 
 
+And deployment cli;
+
+openstack overcloud node provision --stack stack --output ~/overcloud-stor-baremetal-deployed.yaml ~/storage-baremetal-deploy.yaml
+
+
 Firewalling expectations
 
 
@@ -32,4 +37,6 @@ Other requirements
 
 o) EPEL packages (see URL config in roles/ceph-perf-pre/defaults/main.yml if need changing to a local mirror)
 o) Once deployed, the playbook configures the CentOS8 nodes with the default CentOS8 repo mirrors
+o) Update hosts with the ip addresses of your deployed overcloud machines
+
 
