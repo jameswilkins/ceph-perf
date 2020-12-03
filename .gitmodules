@@ -1,0 +1,6 @@
+[submodule "external/fio-plot"]
+	path = external/fio-plot
+	url = https://github.com/louwrentius/fio-plot
+[submodule "roles/fio-run/files/fio-plot"]
+	path = roles/fio-run/files/fio-plot
+	url = https://github.com/louwrentius/fio-plot

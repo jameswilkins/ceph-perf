@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+#
+# Script to clean disks.
+#
+# Converted to bash script due to oddities with ansible async job looping.
+#
+#
+
+dd_opts="{{ dd_syntax }}"
+
+# Tidy up incoming dict
+
+INC_VARS=${@//[^[:alnum:]]/}
+
+# Iterate over ansible dict and background process for each dd
+for disk in $INC_VARS
+do
+  #echo "== dd /dev/$disk with $dd_opts =="
+  dd if=/dev/zero of=/dev/$disk $dd_opts &
+  pids[$disk]=$!
+done
+
+
+# Wait for background dd's to finish
+for pid in ${pids[*]}; 
+do
+  wait $pid
+done
+

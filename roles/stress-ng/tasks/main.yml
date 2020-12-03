@@ -1,0 +1,35 @@
+---
+# tasks file for stress-ng
+#
+- name: Prepare log directory
+  tempfile:
+    state: directory
+    suffix: stress-ng-results
+  register: temp_dir
+
+- name: Launch stress-ng
+  command:
+    cmd: stress-ng {{ stress_ng_opts }} --log-file {{ temp_dir.path }}/results.log
+  async: 3600
+  poll: 0
+  register: stress_ng_job
+
+- name: Poll for stress-ng results
+  async_status:
+    jid: "{{ stress_ng_job.ansible_job_id }}"
+  register: stress_ng_async_job_result
+  until: stress_ng_async_job_result.finished
+  retries: 100
+  delay: 10
+
+- name: Fetch results
+  fetch:
+    src: "{{ temp_dir.path }}/results.log"
+    dest: "results/stress-ng/results-{{ ansible_date_time.iso8601 }}-{{ inventory_hostname }}.log"
+    flat: yes
+
+- name: Delete temporary folder
+  file:
+    path: "{{ temp_dir.path }}"
+    state: absent
+

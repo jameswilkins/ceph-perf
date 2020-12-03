@@ -1,0 +1,35 @@
+Setup
+
+This playbook was developed against OSP 16.1, deploying the centos8 images detailed below
+
+73547b5d8e13cebae394761f29d2656947f2e902dae6478bc07f38ffba4765c1d5d972b261cf3ad66ab76c207ec5f2722b3275eeaea834b89dad5655e9491167  overcloud-full-centos8.initrd
+8d9c00d45af53b55ba1f27bc07c7adb7a39aa7b140f56ffe30b187c852d3c7161cb4d67761a6af63bdfc01d332df56ac49b833953dc2b0974c66c55e1a2ecedc  overcloud-full-centos8.qcow2
+be1c63ed862026a9b0aff25c36a701131bbc7f442f11c013f6409171ddff3f2323f4ef2f82063b7b6e90dfd8da973e707ce26ae76178e8171c0680a3ccbc2349  overcloud-full-centos8.vmlinuz
+
+These images were imported into OSP16.1 with the name centos8 appended to differentiate from existing RHEL overcloud images.
+
+Machines were deployed using
+
+# cat storage-baremetal-deploy.yaml 
+- name: CephStorage
+  count: 2
+  defaults:
+    image:
+      href: overcloud-full-centos8
+  instances:
+  - hostname: ceph-01
+    name: storage-01
+  - hostname: ceph-02
+    name: storage-02
+
+
+Firewalling expectations
+
+
+This playbook expects to be run from a machine that has egress SSH access to all nodes.
+
+Other requirements
+
+o) EPEL packages (see URL config in roles/ceph-perf-pre/defaults/main.yml if need changing to a local mirror)
+o) Once deployed, the playbook configures the CentOS8 nodes with the default CentOS8 repo mirrors
+

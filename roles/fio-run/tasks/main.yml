@@ -1,0 +1,16 @@
+---
+# tasks file for fio-run
+#- name: Setup fio job templates
+#  template:
+#    src: fio-single-run.j2
+#    dest: "/root/fio-single-run-{{ loop_host_disk }}"
+#  loop: "{{ host_disk }}"
+# loop_control:
+#    loop_var: loop_host_disk
+
+- name: Upload fio benchmarking scripts
+  copy:
+    src: fio-plot/benchmark_script/
+    dest: /root/benchmark_script/
+
+

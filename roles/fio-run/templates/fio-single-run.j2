@@ -1,0 +1,26 @@
+[global]
+norandommap
+refill_buffers
+bs=4k
+runtime=60
+ioengine=libaio
+iodepth=64
+direct=1
+sync=0
+buffered=0
+randrepeat=0
+time_based=1
+clocksource=gettimeofday
+ramp_time=10
+write_bw_log=fio
+write_iops_log=fio
+write_lat_log=fio
+log_avg_msec=1000
+write_hist_log=fio
+log_hist_msec=10000
+output-format=json+
+
+[job-{{ inventory_hostname }}-{{ loop_host_disk }}]
+filename=/dev/{{ loop_host_disk }}
+rw={read,write,randread,randwrite}
+numjobs=4

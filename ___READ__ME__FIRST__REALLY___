@@ -1,0 +1,6 @@
+This collection of Ansible roles can irrevocably cause destruction of data. 
+
+Whilst the roles attempt to identify non-used disks, great care should be taken.
+
+
+

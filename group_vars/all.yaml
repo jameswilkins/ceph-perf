@@ -7,6 +7,7 @@ testing_tools:
   - stress-ng
   - fio
   - iperf3
+  - python3-numpy #Used by fio-plot
 
 ## DD Job Configuration
 #
@@ -15,13 +16,13 @@ dd_jobs_timeout: 60
 
 # Number of times to loop dd to pre-condition disks
 #
-dd_loop_count: 5
+dd_loop_count: 0
 
 # For testing modify this to enable the DD to finish quicker
 #
 # For Testing
 #
-dd_syntax: bs=1M count=5000 oflag=direct
+dd_syntax: bs=1M count=100 oflag=direct
 #
 # For Production
 #
@@ -32,6 +33,23 @@ dd_syntax: bs=1M count=5000 oflag=direct
 ## Stress-ng Job Configuration
 #
 # Passing 0 to --io and --vm let's stress-ng decide the number of threads based on physical cpu 
-stress_ng_opts: --cpu-method all --io 0 --vm 0 --timeout 30m --metrics-brief --log-file=/root/stress-ng.log
+#
+# Below line is for test runs for production this should be run for a pro-longed period to ensure longer testing
+stress_ng_opts: --cpu-method all --io 0 --vm 0 --timeout 10s --metrics-brief
 
+#
+#
+# Production
+# stress_ng_opts: --cpu-method all --io 0 --vm 0 --timeout 24h --metrics-brief
+#
+
+
+## FIO Job Configuration
+#
+#
+# Configuration options to get a baseline performance of each disk
+# Tests are done serially then in parallel.  This is to catch corner cases where bus bandwidth can become an issue
+#
+#
+fio_job_opts: 
 
