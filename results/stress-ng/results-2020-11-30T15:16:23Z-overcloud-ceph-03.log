@@ -1,6 +1,0 @@
-stress-ng: info:  [30734] dispatching hogs: 2 io, 2 vm
-stress-ng: info:  [30734] successful run completed in 60.54s (1 min, 0.54 secs)
-stress-ng: info:  [30734] stressor       bogo ops real time  usr time  sys time   bogo ops/s   bogo ops/s
-stress-ng: info:  [30734]                           (secs)    (secs)    (secs)   (real time) (usr+sys time)
-stress-ng: info:  [30734] io               516694     60.01      3.27     23.16      8610.78     19549.53
-stress-ng: info:  [30734] vm              1042883     60.52     28.70      1.35     17233.32     34704.93
