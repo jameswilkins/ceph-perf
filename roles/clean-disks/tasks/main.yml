@@ -9,7 +9,7 @@
   command: lsblk -n --output NAME --nodeps --exclude 7
   register: lsblk_out
 
-- name: check if disk {{ item }} is free
+- name: check if disk is free - ERROR expected - don't panic
   command: pvcreate --test /dev/{{ item }}
   ignore_errors: true
   register: pv_status
@@ -26,9 +26,9 @@
   debug:
     var: host_disk
 
-#- name: Pre-condition disks Loop
-#  include: clean-disks.yaml
-#  with_sequence: count={{ dd_loop_count }}
+- name: Pre-condition disks Loop
+  include: clean-disks.yaml
+  with_sequence: count={{ dd_loop_count }}
 
 - name: copy script..
   template:

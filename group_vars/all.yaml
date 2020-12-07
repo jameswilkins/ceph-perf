@@ -15,6 +15,7 @@ testing_tools:
 dd_jobs_timeout: 60
 
 # Number of times to loop dd to pre-condition disks
+# For production runs should be ~5
 #
 dd_loop_count: 0
 
@@ -51,5 +52,25 @@ stress_ng_opts: --cpu-method all --io 0 --vm 0 --timeout 10s --metrics-brief
 # Tests are done serially then in parallel.  This is to catch corner cases where bus bandwidth can become an issue
 #
 #
-fio_job_opts: 
+#fio_job_opts: 
+
+# runtime of individual fio jobs.  Should be increased for production runs.
+#
+fio_single_job_runtime: 60
+
+# iodepth for individual fio jobs.  works in conjunction with num jobs below (ref: https://unix.stackexchange.com/questions/459045/what-exactly-is-iodepth-in-fio )
+fio_single_job_iodepth: 64
+
+# ramp up time for individial fio jobs, tweak based on expectations
+fio_single_job_rampup: 60
+
+# no of jobs for individual fio jobs.  (ref: https://unix.stackexchange.com/questions/459045/what-exactly-is-iodepth-in-fio )
+fio_single_job_nojobs: 4
+
+# what fio runs to do (single run)
+fio_single_job_what: "read write randrw randread randwrite" 
+
+#Read/Write Mix
+# Can add multiples to do more than one combination
+fio_single_job_rwmix: 75
 

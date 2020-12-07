@@ -5,12 +5,27 @@
 #    src: fio-single-run.j2
 #    dest: "/root/fio-single-run-{{ loop_host_disk }}"
 #  loop: "{{ host_disk }}"
-# loop_control:
+#  loop_control:
 #    loop_var: loop_host_disk
 
 - name: Upload fio benchmarking scripts
   copy:
     src: fio-plot/benchmark_script/
     dest: /root/benchmark_script/
+    mode: preserve
+
+#./bench_fio -d /dev/vdb -t device --mode read -o VDB-READ-ceph-01 --quiet --iodepth 1 8 16 -b 4k,4M --numjobs 1
+
+- name: Run FIO Jobs (Serial)
+  command: 
+    cmd: "/root/benchmark_script/bench_fio --output logs -d /dev/{{ loop_host_disk }} --type device --mode {{ fio_single_job_what }} -o {{ loop_host_disk }}-read-{{ inventory_hostname }} --iodepth {{ fio_single_job_iodepth }} --numjobs {{ fio_single_job_nojobs }} --rwmixread {{ fio_single_job_rwmix }} "
+    chdir: /root/benchmark_script
+  loop: "{{ host_disk }}"
+  loop_control:
+    loop_var: loop_host_disk
+
+
+
+  
 
 
