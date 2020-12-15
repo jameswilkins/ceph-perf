@@ -6,6 +6,8 @@
     msg: "{{ ansible_distribution }} is not supported.  CentOS is required"
     that: "ansible_distribution == 'CentOS'"
 
+- name: Discover Disks
+  include_tasks: discover_disks.yml
 
 - name: Repos
   include_tasks: repos.yml

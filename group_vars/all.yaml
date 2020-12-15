@@ -8,6 +8,7 @@ testing_tools:
   - fio
   - iperf3
   - python3-numpy #Used by fio-plot
+  - smartmontools
 
 ## DD Job Configuration
 #
@@ -36,7 +37,7 @@ dd_syntax: bs=1M count=100 oflag=direct
 # Passing 0 to --io and --vm let's stress-ng decide the number of threads based on physical cpu 
 #
 # Below line is for test runs for production this should be run for a pro-longed period to ensure longer testing
-stress_ng_opts: --cpu-method all --io 0 --vm 0 --timeout 10s --metrics-brief
+stress_ng_opts: --cpu-method all --io 0 --vm 0 --timeout 60s --metrics-brief
 
 #
 #
@@ -56,21 +57,28 @@ stress_ng_opts: --cpu-method all --io 0 --vm 0 --timeout 10s --metrics-brief
 
 # runtime of individual fio jobs.  Should be increased for production runs.
 #
-fio_single_job_runtime: 60
+fio_single_job_runtime: 5
+fio_batch_job_runtime: 5
 
 # iodepth for individual fio jobs.  works in conjunction with num jobs below (ref: https://unix.stackexchange.com/questions/459045/what-exactly-is-iodepth-in-fio )
 fio_single_job_iodepth: 64
+fio_batch_job_iodepth: 64
 
 # ramp up time for individial fio jobs, tweak based on expectations
 fio_single_job_rampup: 60
+fio_batch_job_rampup: 60
 
 # no of jobs for individual fio jobs.  (ref: https://unix.stackexchange.com/questions/459045/what-exactly-is-iodepth-in-fio )
 fio_single_job_nojobs: 4
+fio_batch_job_nojobs: 4
 
 # what fio runs to do (single run)
 fio_single_job_what: "read write randrw randread randwrite" 
+fio_batch_job_what: "read write randrw randread randwrite"
 
 #Read/Write Mix
 # Can add multiples to do more than one combination
 fio_single_job_rwmix: 75
+fio_batch_job_rwmix: 75
+
 

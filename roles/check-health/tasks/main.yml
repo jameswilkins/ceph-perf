@@ -1,0 +1,4 @@
+---
+
+- name: SmartCTL Checks
+  include_tasks: smartctl-health.yml

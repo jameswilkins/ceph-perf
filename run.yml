@@ -4,5 +4,7 @@
   roles:
     - ceph-perf-pre
     - clean-disks
-    - stress-ng
+      #- check-health
+      #- stress-ng
     - fio-run
+    - check-health

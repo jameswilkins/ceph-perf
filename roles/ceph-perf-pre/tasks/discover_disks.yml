@@ -1,0 +1,26 @@
+---
+- name: setup
+  set_fact:
+    host_disk: []
+
+- name: Get a list of block devices (excludes loop and child devices)
+  command: lsblk -n --output NAME --nodeps --exclude 7
+  register: lsblk_out
+
+- name: check if disk is free - ERROR expected - don't panic
+  command: pvcreate --test /dev/{{ item }}
+  ignore_errors: true
+  register: pv_status
+  loop: "{{lsblk_out.stdout_lines}}"
+
+- name: Update hosts freedisk list
+  set_fact:
+    host_disk: "{{host_disk + [item.item]}}"
+  ignore_errors: true
+  when: item.rc == 0
+  loop: "{{ pv_status.results}}"
+
+- name: RESULTS
+  debug:
+    var: host_disk
+

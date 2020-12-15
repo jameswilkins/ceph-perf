@@ -1,0 +1,12 @@
+---
+# tasks file for check-health
+# smartctl will return >0 if issues identified with health counters.  We use this to identify any poorly disks
+#
+- name: Check device health 
+  command:
+    cmd: "smartctl -H {{ loop_host_disk }}"
+  loop: "{{ host_disk }}"
+  ignore_errors: true # remove before production, virtual disks don't support smart attributes
+  loop_control:
+    loop_var: loop_host_disk
+
