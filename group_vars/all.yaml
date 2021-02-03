@@ -83,4 +83,7 @@ fio_batch_job_what: "read write randrw randread randwrite"
 fio_single_job_rwmix: 75
 fio_batch_job_rwmix: 75
 
+#Block Size (, for multiples)
+fio_block_size: 4k
+
 
