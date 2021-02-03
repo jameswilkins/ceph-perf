@@ -18,7 +18,7 @@
 
 - name: Run FIO Jobs (Serial)
   command: 
-    cmd: "/root/benchmark_script/bench_fio --output logs -d /dev/{{ loop_host_disk }} --type device --mode {{ fio_single_job_what }} -o {{ loop_host_disk }}-read-{{ inventory_hostname }} --iodepth {{ fio_single_job_iodepth }} --numjobs {{ fio_single_job_nojobs }} --rwmixread {{ fio_single_job_rwmix }} --runtime {{ fio_single_job_runtime }}"
+    cmd: "/root/benchmark_script/bench_fio --output logs -d /dev/{{ loop_host_disk }} --type device --mode {{ fio_single_job_what }} -o {{ loop_host_disk }}-read-{{ inventory_hostname }} -b 4k,4M --iodepth {{ fio_single_job_iodepth }} --numjobs {{ fio_single_job_nojobs }} --rwmixread {{ fio_single_job_rwmix }} --runtime {{ fio_single_job_runtime }}"
     chdir: /root/benchmark_script
   loop: "{{ host_disk }}"
   loop_control:
@@ -54,52 +54,52 @@
     warn: false
   delegate_to: 127.0.0.1
 
-- name: Create fio-batch script
-  template:
-    src: "fio-batch.j2"
-    dest: "/root/benchmark_script/fio-batch.sh"
+#- name: Create fio-batch script
+#  template:
+#    src: "fio-batch.j2"
+#    dest: "/root/benchmark_script/fio-batch.sh"
 
-- name: Fix up perms
-  file:
-    path: /root/benchmark_script/fio-batch.sh
-    mode: 0755
+#- name: Fix up perms
+#file:
+#    path: /root/benchmark_script/fio-batch.sh
+#    mode: 0755
 
-- name: Execute fio batch on all nodes
-  command:
-    cmd: "/root/benchmark_script/fio-batch.sh"
-    chdir: "/root/benchmark_script"
-  register: fio_batch_run
-  async: 3600
-  poll: 0
+#- name: Execute fio batch on all nodes
+#  command:
+#    cmd: "/root/benchmark_script/fio-batch.sh"
+#    chdir: "/root/benchmark_script"
+#  register: fio_batch_run
+#  async: 3600
+#  poll: 0
 
-- name:  Poll for fio-batch-finish
-  async_status:
-    jid: "{{ fio_batch_run.ansible_job_id }}"
-  register: fio_batch_run_result
-  until: fio_batch_run_result.finished
-  retries: 100
-  delay: 10
+#- name:  Poll for fio-batch-finish
+#  #async_status:
+#    jid: "{{ fio_batch_run.ansible_job_id }}"
+#  register: fio_batch_run_result
+#  until: fio_batch_run_result.finished
+#  retries: 2000
+#  delay: 60
 
-- name: Compress up results
-  shell:
-    cmd: "tar -cf /root/benchmark_script/results-{{ inventory_hostname }}.tar *-{{ inventory_hostname }}"
-    chdir: "/root/benchmark_script"
-    warn: false
+##- name: Compress up results
+#  shell:
+#    cmd: "tar -cf /root/benchmark_script/results-{{ inventory_hostname }}.tar *-{{ inventory_hostname }}"
+#    chdir: "/root/benchmark_script"
+#    warn: false
 
-- name: Bring back results to localhost
-  fetch:
-    src: "/root/benchmark_script/results-{{ inventory_hostname }}.tar"
-    dest: "results/fio-results-batch/"
-    flat: yes
+  #- name: Bring back results to localhost
+  #fetch:
+  #  src: "/root/benchmark_script/results-{{ inventory_hostname }}.tar"
+  #  dest: "results/fio-results-batch/"
+  #  flat: yes
 
-- name: Remove results from nodes
-  shell:
-    cmd: "rm -rf /root/benchmark_script/*-{{ inventory_hostname }}"
+  #- name: Remove results from nodes
+  # shell:
+  #  cmd: "rm -rf /root/benchmark_script/*-{{ inventory_hostname }}"
 
-- name: Remove results archive
-  shell:
-    cmd: "rm -f /root/benchmark_script/results-{{ inventory_hostname }}.tar"
-    warn: false
+  #- name: Remove results archive
+  #shell:
+  #  cmd: "rm -f /root/benchmark_script/results-{{ inventory_hostname }}.tar"
+  #  warn: false
 
 
 

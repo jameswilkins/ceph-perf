@@ -59,12 +59,12 @@ stress_ng_opts: --cpu-method all --io 0 --vm 0 --timeout 60s --metrics-brief
 
 # runtime of individual fio jobs.  Should be increased for production runs.
 #
-fio_single_job_runtime: 120
-fio_batch_job_runtime: 120
+fio_single_job_runtime: 1200
+fio_batch_job_runtime: 1200
 
 # iodepth for individual fio jobs.  works in conjunction with num jobs below (ref: https://unix.stackexchange.com/questions/459045/what-exactly-is-iodepth-in-fio )
-fio_single_job_iodepth: 1 2 4 8 16 32 64
-fio_batch_job_iodepth: 1 2 4 8 16 32 64
+fio_single_job_iodepth: 64
+fio_batch_job_iodepth: 64
 
 # ramp up time for individial fio jobs, tweak based on expectations
 fio_single_job_rampup: 60
