@@ -8,7 +8,7 @@
 
 - name: Capture NUMA topology and record results
   command:
-    cmd: "lstopo --output-format=png >/{{ numa_temp_dir.path }}/numa.png"
+    cmd: "/usr/bin/lstopo --output-format png --of png >/root/numa.png"
 
 - name: Fetch NUMA results
   fetch:
