@@ -1,2 +1,5 @@
 results/*
 hosts
+ansible.log
+ansible.cfg
+
