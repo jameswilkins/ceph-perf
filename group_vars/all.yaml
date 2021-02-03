@@ -15,22 +15,22 @@ testing_tools:
 ## DD Job Configuration
 #
 # Timeout for dd jobs.  Increase for production run
-dd_jobs_timeout: 60
+dd_jobs_timeout: 3600
 
 # Number of times to loop dd to pre-condition disks
 # For production runs should be ~5
 #
-dd_loop_count: 0
+dd_loop_count: 5
 
 # For testing modify this to enable the DD to finish quicker
 #
 # For Testing
 #
-dd_syntax: bs=1M count=100 oflag=direct
+#dd_syntax: bs=1M count=100 oflag=direct
 #
 # For Production
 #
-# dd_syntax: bs=1M oflag=direct
+dd_syntax: bs=1M oflag=direct
 #
 
 
