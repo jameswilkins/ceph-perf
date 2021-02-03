@@ -1,0 +1,5 @@
+---
+- hosts: ceph
+  become: yes
+  roles:
+    - ceph-perf-pre

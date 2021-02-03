@@ -1,0 +1,26 @@
+---
+
+- name: Prepare temporary directory
+  tempfile:
+    state: directory
+    suffix: numa-topology
+  register: numa_temp_dir
+
+- name: Capture NUMA topology and record results
+  command:
+    cmd: "lstopo --output-format=png >/{{ numa_temp_dir.path }}/numa.png"
+    state: present
+
+- name: Fetch NUMA results
+  fetch:
+    src: "{{ numa_temp_dir }}/numa.png"
+    dest: "results/numa/results-{{ ansible_date_time.iso8601 }}-{{ inventory_hostname }}.png"
+    flat: yes
+
+- name: clean up temporary dir
+  file:
+    path: "{{numa_temp_dir.path}}"
+    state: absent
+
+
+

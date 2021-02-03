@@ -18,4 +18,6 @@
 - name: Tools
   include_tasks: tools.yml
 
+- name: NUMA
+  include_tasks: numa-topology.yml
 
