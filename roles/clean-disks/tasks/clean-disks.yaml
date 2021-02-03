@@ -10,7 +10,7 @@
 
 - name: execute job
   shell:
-    "/tmp/clean-disks.sh {{ host_disk | to_yaml }}"
+    "/tmp/clean-disks.sh {{ host_disk | to_yaml | replace('\n', '') }}"
   register: dd_async
   async: 3600
   poll:  0
@@ -20,6 +20,6 @@
     jid: "{{ dd_async.ansible_job_id }}"
   register: dd_async_job_result
   until: dd_async_job_result.finished
-  retries: 100
-  delay: 10
+  retries: 3600
+  delay: 60
 
