@@ -4,4 +4,3 @@
   roles:
     - ceph-perf-pre
     - clean-disks
-    - check-health
