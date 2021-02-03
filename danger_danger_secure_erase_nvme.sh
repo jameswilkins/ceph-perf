@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Script to perform a cryptographic secure erase on all NVME devices on the PPB test kit
+# Script to perform a cryptographic secure erase on all NVME devices on the test kit
 #
 # This is *not* launched by ansible due to its destructive nature.
 echo "This script *will* irrevocably erase the contents of /dev/nvme[0-23]"
