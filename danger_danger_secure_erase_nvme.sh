@@ -10,5 +10,5 @@ read -n 1 -s -r -p "Press any key to continue"
 for i in {0..23}
 do
  echo "=> Working on /dev/nvme$i"
- nvme format /dev/nvme$i -ses 2 -n 1
+ nvme format /dev/nvme$i -ses 2 -n 1 -f
 done
