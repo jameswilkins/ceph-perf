@@ -71,7 +71,7 @@ fio_single_job_rampup: 60
 fio_batch_job_rampup: 60
 
 # no of jobs for individual fio jobs.  (ref: https://unix.stackexchange.com/questions/459045/what-exactly-is-iodepth-in-fio )
-fio_single_job_nojobs: 1
+fio_single_job_nojobs: 1,2,4
 fio_batch_job_nojobs: 1
 
 # what fio runs to do (single run)
