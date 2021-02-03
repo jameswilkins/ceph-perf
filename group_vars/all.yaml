@@ -9,6 +9,8 @@ testing_tools:
   - iperf3
   - python3-numpy #Used by fio-plot
   - smartmontools
+  - hwloc-gui # used for numa topology mapping
+  - nvme-cli # NVME cli tools
 
 ## DD Job Configuration
 #
@@ -57,20 +59,20 @@ stress_ng_opts: --cpu-method all --io 0 --vm 0 --timeout 60s --metrics-brief
 
 # runtime of individual fio jobs.  Should be increased for production runs.
 #
-fio_single_job_runtime: 5
-fio_batch_job_runtime: 5
+fio_single_job_runtime: 120
+fio_batch_job_runtime: 120
 
 # iodepth for individual fio jobs.  works in conjunction with num jobs below (ref: https://unix.stackexchange.com/questions/459045/what-exactly-is-iodepth-in-fio )
-fio_single_job_iodepth: 64
-fio_batch_job_iodepth: 64
+fio_single_job_iodepth: 1 2 4 8 16 32 64
+fio_batch_job_iodepth: 1 2 4 8 16 32 64
 
 # ramp up time for individial fio jobs, tweak based on expectations
 fio_single_job_rampup: 60
 fio_batch_job_rampup: 60
 
 # no of jobs for individual fio jobs.  (ref: https://unix.stackexchange.com/questions/459045/what-exactly-is-iodepth-in-fio )
-fio_single_job_nojobs: 4
-fio_batch_job_nojobs: 4
+fio_single_job_nojobs: 1
+fio_batch_job_nojobs: 1
 
 # what fio runs to do (single run)
 fio_single_job_what: "read write randrw randread randwrite" 
