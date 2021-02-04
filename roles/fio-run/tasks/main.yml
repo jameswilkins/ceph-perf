@@ -60,7 +60,7 @@
     dest: "/root/benchmark_script/fio-batch.sh"
 
 - name: Fix up perms
-file:
+  file:
     path: /root/benchmark_script/fio-batch.sh
     mode: 0755
 
