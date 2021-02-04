@@ -3,6 +3,11 @@
 # Script to perform a cryptographic secure erase on all NVME devices on the test kit
 #
 # This is *not* launched by ansible due to its destructive nature.
+#
+# Delete the next two lines 
+#
+echo "Bailing"
+exit -1
 echo "This script *will* irrevocably erase the contents of /dev/nvme[0-23]"
 echo "If you do *NOT* wish this to happen - stop this script now"
 sleep 10
