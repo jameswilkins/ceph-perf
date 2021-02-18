@@ -1,9 +1,0 @@
-#!/bin/bash
-{% for loop_host_disk in host_disk %}
-  ./bench_fio --output logs -d /dev/{{ loop_host_disk }} --type device --mode {{ fio_batch_job_what }} -o {{ loop_host_disk }}-read-{{ inventory_hostname }} --iodepth {{ fio_batch_job_iodepth }} --numjobs {{ fio_batch_job_nojobs }} --rwmixread {{ fio_batch_job_rwmix }} --runtime {{ fio_batch_job_runtime }} &
-{% endfor %}
-
-# wait for children to finish
-wait
-
-
