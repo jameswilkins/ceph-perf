@@ -1,0 +1,46 @@
+---
+# tasks file for fio-run
+
+- name: Upload fio benchmarking scripts
+  copy:
+    src: fio-plot/benchmark_script/
+    dest: /root/benchmark_script/
+    mode: preserve
+
+- name: Run FIO Jobs (Serial)
+  command: 
+    cmd: "/root/benchmark_script/bench_fio --output logs -d /dev/{{ loop_host_disk }} --type device --mode {{ fio_single_job_what }} -o {{ loop_host_disk }}-read-{{ inventory_hostname }} -b {{ fio_block_size }} --iodepth {{ fio_single_job_iodepth }} --numjobs {{ fio_single_job_nojobs }} --rwmixread {{ fio_single_job_rwmix }} --runtime {{ fio_single_job_runtime }}"
+    chdir: /root/benchmark_script
+  loop: "{{ host_disk }}"
+  loop_control:
+    loop_var: loop_host_disk
+
+- name: Compress up results
+  shell:
+    cmd: "tar -cf /root/benchmark_script/results-{{ inventory_hostname }}.tar *-{{ inventory_hostname }}"
+    chdir: "/root/benchmark_script"
+    warn: false
+      
+- name: Bring back results to localhost
+  fetch:
+    src: "/root/benchmark_script/results-{{ inventory_hostname }}.tar"
+    dest: "results/fio-results-single/"
+    flat: yes
+
+- name: Remove results from nodes in prep for next test
+  shell:
+    cmd: "rm -rf /root/benchmark_script/*-{{ inventory_hostname }}"
+    warn: false
+ 
+- name: Remove results archive
+  shell:
+    cmd: "rm -f /root/benchmark_script/results-{{ inventory_hostname }}.tar"
+    warn: false
+
+- name: Unpack results locally
+  shell:
+    cmd: "tar -xf results-{{ inventory_hostname}}.tar"
+    chdir: results/fio-results-single
+    warn: false
+  delegate_to: 127.0.0.1
+

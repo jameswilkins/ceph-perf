@@ -1,0 +1,54 @@
+---
+# tasks file for fio-run
+
+- name: Upload fio benchmarking scripts
+  copy:
+    src: fio-plot/benchmark_script/
+    dest: /root/benchmark_script/
+    mode: preserve
+
+- name: Create fio-batch script
+  template:
+    src: "fio-batch.j2"
+    dest: "/root/benchmark_script/fio-batch.sh"
+
+- name: Fix up perms
+  file:
+    path: /root/benchmark_script/fio-batch.sh
+    mode: 0755
+
+- name: Execute fio batch on all nodes
+  command:
+    cmd: "/root/benchmark_script/fio-batch.sh"
+    chdir: "/root/benchmark_script"
+  register: fio_batch_run
+
+- name: Compress up results
+  shell:
+    cmd: "tar -cf /root/benchmark_script/results-{{ inventory_hostname }}.tar *-{{ inventory_hostname }}"
+    chdir: "/root/benchmark_script"
+    warn: false
+
+- name: Bring back results to localhost
+  fetch:
+    src: "/root/benchmark_script/results-{{ inventory_hostname }}.tar"
+    dest: "results/fio-results-batch/"
+    flat: yes
+
+- name: Remove results from nodes
+  shell:
+    cmd: "rm -rf /root/benchmark_script/*-{{ inventory_hostname }}"
+
+- name: Remove results archive
+  shell:
+    cmd: "rm -f /root/benchmark_script/results-{{ inventory_hostname }}.tar"
+    warn: false
+
+
+
+
+
+
+  
+
+
