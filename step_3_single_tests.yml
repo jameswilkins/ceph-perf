@@ -3,4 +3,4 @@
   become: yes
   roles:
     - ceph-perf-pre
-    - fio-run
+    - fio-run-single

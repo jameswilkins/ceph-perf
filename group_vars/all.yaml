@@ -39,12 +39,12 @@ dd_syntax: bs=1M oflag=direct
 # Passing 0 to --io and --vm let's stress-ng decide the number of threads based on physical cpu 
 #
 # Below line is for test runs for production this should be run for a pro-longed period to ensure longer testing
-stress_ng_opts: --cpu-method all --io 0 --vm 0 --timeout 60s --metrics-brief
+# stress_ng_opts: --cpu-method all --io 0 --vm 0 --timeout 60s --metrics-brief
 
 #
 #
 # Production
-# stress_ng_opts: --cpu-method all --io 0 --vm 0 --timeout 24h --metrics-brief
+stress_ng_opts: --cpu-method all --io 0 --vm 0 --timeout 24h --metrics-brief
 #
 
 
